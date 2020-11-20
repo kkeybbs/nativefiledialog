@@ -14,6 +14,7 @@ ifeq ($(config),release_x64)
   test_opendialog_config = release_x64
   test_opendialogmultiple_config = release_x64
   test_savedialog_config = release_x64
+  test_all_config = release_x64
 endif
 ifeq ($(config),release_x86)
   nfd_config = release_x86
@@ -21,6 +22,7 @@ ifeq ($(config),release_x86)
   test_opendialog_config = release_x86
   test_opendialogmultiple_config = release_x86
   test_savedialog_config = release_x86
+  test_all_config = release_x86
 endif
 ifeq ($(config),debug_x64)
   nfd_config = debug_x64
@@ -28,6 +30,7 @@ ifeq ($(config),debug_x64)
   test_opendialog_config = debug_x64
   test_opendialogmultiple_config = debug_x64
   test_savedialog_config = debug_x64
+  test_all_config = debug_x64
 endif
 ifeq ($(config),debug_x86)
   nfd_config = debug_x86
@@ -35,9 +38,10 @@ ifeq ($(config),debug_x86)
   test_opendialog_config = debug_x86
   test_opendialogmultiple_config = debug_x86
   test_savedialog_config = debug_x86
+  test_all_config = debug_x86
 endif
 
-PROJECTS := nfd test_pickfolder test_opendialog test_opendialogmultiple test_savedialog
+PROJECTS := nfd test_pickfolder test_opendialog test_opendialogmultiple test_savedialog test_all
 
 .PHONY: all clean help $(PROJECTS) 
 
@@ -73,12 +77,19 @@ ifneq (,$(test_savedialog_config))
 	@${MAKE} --no-print-directory -C . -f test_savedialog.make config=$(test_savedialog_config)
 endif
 
+test_all: nfd
+ifneq (,$(test_all_config))
+	@echo "==== Building test_all ($(test_all_config)) ===="
+	@${MAKE} --no-print-directory -C . -f test_all.make config=$(test_all_config)
+endif
+
 clean:
 	@${MAKE} --no-print-directory -C . -f nfd.make clean
 	@${MAKE} --no-print-directory -C . -f test_pickfolder.make clean
 	@${MAKE} --no-print-directory -C . -f test_opendialog.make clean
 	@${MAKE} --no-print-directory -C . -f test_opendialogmultiple.make clean
 	@${MAKE} --no-print-directory -C . -f test_savedialog.make clean
+	@${MAKE} --no-print-directory -C . -f test_all.make clean
 
 help:
 	@echo "Usage: make [config=name] [target]"
@@ -97,5 +108,6 @@ help:
 	@echo "   test_opendialog"
 	@echo "   test_opendialogmultiple"
 	@echo "   test_savedialog"
+	@echo "   test_all"
 	@echo ""
 	@echo "For more information, see https://github.com/premake/premake-core/wiki"

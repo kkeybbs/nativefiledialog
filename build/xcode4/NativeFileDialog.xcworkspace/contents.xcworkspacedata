@@ -5,6 +5,9 @@
 		location = "group:nfd.xcodeproj">
 	</FileRef>
 	<FileRef
+		location = "group:test_all.xcodeproj">
+	</FileRef>
+	<FileRef
 		location = "group:test_opendialog.xcodeproj">
 	</FileRef>
 	<FileRef
